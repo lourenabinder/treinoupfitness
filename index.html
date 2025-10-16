@@ -1,200 +1,340 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TreinoUpFitness 💪</title>
-<meta name="theme-color" content="#e50914">
-<link rel="manifest" href="manifest.json">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>💪 Carga Up - Evolua a cada treino!</title>
+<meta name="theme-color" content="#00c853">
 <style>
-  :root {
-    --bg: #0a0a0a;
-    --card: #1a1a1a;
-    --text: #fff;
-    --accent: #e50914;
-    --danger: #ff4444;
-    --border: #333;
-  }
-  body.light {
-    --bg: #f9f9f9;
-    --card: #fff;
-    --text: #111;
-    --accent: #c20010;
-    --danger: #ff4444;
-    --border: #ccc;
-  }
-  body {
-    margin:0; padding:1rem; font-family:sans-serif;
-    background:var(--bg); color:var(--text); transition:0.3s;
-  }
-  h1{text-align:center;color:var(--accent);margin-bottom:1rem;}
-  .container{max-width:900px;margin:auto;}
-  .add-form{display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;margin-bottom:1rem;}
-  input,select,button,textarea{
-    padding:0.6rem 0.8rem;border-radius:8px;border:1px solid var(--border);
-    background:var(--card);color:var(--text);flex:1;min-width:120px;
-  }
-  button{background:var(--accent);border:none;cursor:pointer;font-weight:600;color:#fff;}
-  button:hover{opacity:0.85;transform:scale(1.02);}
-  .theme-toggle{
-    position:fixed;top:8px;right:8px;
-    padding:0.35rem 0.6rem;font-size:0.8rem;
-    border-radius:8px;border:1px solid var(--border);
-    background:var(--card);color:var(--text);
-    cursor:pointer;z-index:10;
-  }
-  .section{margin-bottom:1.5rem;}
-  h2{color:var(--accent);border-bottom:1px solid var(--border);padding-bottom:0.3rem;font-size:1.2rem;margin-top:0;}
-  ul{list-style:none;padding:0;margin:0;}
-  li{
-    background:var(--card);border:1px solid var(--border);border-radius:12px;
-    padding:0.8rem;margin-bottom:1rem;box-shadow:0 2px 6px rgba(0,0,0,0.3);
-    transition:0.3s;
-  }
-  li:hover{transform: translateY(-1px);}
-  .btnExcluir{background:var(--danger);color:#fff;border:none;padding:0.3rem 0.6rem;border-radius:6px;cursor:pointer;margin-top:0.3rem;font-size:0.85rem;}
-  .btnExcluir:hover{opacity:0.85;}
-  .feedback{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:0.5rem 1rem;border-radius:8px;font-weight:600;box-shadow:0 3px 6px rgba(0,0,0,0.3);opacity:0;animation:fadeOut 2s forwards;z-index:10;}
-  @keyframes fadeOut{0%{opacity:1;}90%{opacity:1;}100%{opacity:0;}}
-  .carga-item{
-    background: rgba(255,255,255,0.05);
-    border-radius:6px; padding:0.3rem 0.5rem;
-    margin:0.2rem 0; font-size:0.85rem;
-    display:flex; justify-content:space-between; align-items:center;
-  }
-  .carga-btns button{background:none;border:none;color:var(--accent);cursor:pointer;margin-left:0.3rem;font-size:0.8rem;}
-  .carga-btns button:hover{text-decoration:underline;}
-  .obs-area{
-    width:100%;margin-top:0.4rem;resize:vertical;min-height:50px;
-    font-size:0.9rem;border:1px solid var(--border);
-  }
+:root {
+  --bg: #ffffff;
+  --card: #f9f9f9;
+  --text: #111;
+  --accent: #00c853;
+  --accent-light: #b9f6ca;
+  --danger: #e53935;
+  --border: #ccc;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 1rem;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg);
+  color: var(--text);
+}
+.container { max-width: 950px; margin: 0 auto 96px auto; }
+h1 {
+  text-align: center;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 16px;
+  font-size: 1rem;
+  background: var(--card);
+}
+input, textarea, button {
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 1rem;
+}
+textarea {
+  width: 100%;
+  min-height: 60px;
+  resize: vertical;
+}
+ul { list-style: none; padding: 0; margin: 0; }
+li {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  transition: background 0.3s;
+}
+li.concluido { background: var(--accent-light); }
+.add-form { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.add-form > * { flex: 1; min-width: 120px; }
+.carga-item {
+  background: rgba(0,0,0,0.04);
+  border-radius: 6px;
+  padding: 6px 8px;
+  margin: 6px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+.btn-row { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.btn {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn.primary { background: var(--accent); color: #fff; }
+.btn.warn { background: var(--danger); color: #fff; }
+.btn.check { background: var(--accent); color: #fff; }
+.reset-btn { background: var(--danger); color: #fff; margin-top: 16px; padding: 10px; width: 100%; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; }
+.obs-container { margin-top: 8px; display: flex; flex-direction: column; gap: 6px; }
+.feedback {
+  position: fixed;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity .25s;
+}
+footer {
+  text-align: center;
+  margin-top: 24px;
+  color: var(--accent);
+  font-weight: 500;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+}
 </style>
 </head>
 <body>
-<button class="theme-toggle" id="toggleTheme">🌙</button>
+
 <div class="container">
-<h1>TreinoUpFitness 💪</h1>
-<div class="add-form">
-<input type="text" id="nomeExercicio" placeholder="Nome do exercício">
-<select id="tipoExercicio">
-<option value="superior">Superiores</option>
-<option value="inferior">Inferiores</option>
-</select>
-<button onclick="adicionarExercicio()">Adicionar</button>
+  <h1>💪 Carga Up - Evolua a cada treino!</h1>
+
+  <select id="selectTreino">
+    <option value="A">Treino A</option>
+    <option value="B">Treino B</option>
+    <option value="C">Treino C</option>
+    <option value="D">Treino D</option>
+    <option value="E">Treino E</option>
+    <option value="F">Treino F</option>
+  </select>
+
+  <div class="add-form">
+    <input id="nomeExercicio" type="text" placeholder="Nome do exercício">
+    <input id="series" type="number" placeholder="Séries">
+    <input id="repeticoes" type="number" placeholder="Repetições">
+    <input id="descanso" type="number" placeholder="Descanso (ex: 60)">
+    <button id="btnAddEx" class="btn primary">Adicionar Exercício</button>
+  </div>
+
+  <ul id="listaExercicios"></ul>
+  
+  <button id="btnResetTreino" class="reset-btn">🗑️ Resetar Treino</button>
 </div>
-<div class="section">
-<h2>Superiores</h2>
-<ul id="listaSuperiores"></ul>
-</div>
-<div class="section">
-<h2>Inferiores</h2>
-<ul id="listaInferiores"></ul>
-</div>
-</div>
+
+<div id="feedback" class="feedback"></div>
+
+<footer>🏋️‍♂️ Cada esforço conta! Continue se superando todos os dias!</footer>
+
 <script>
-const body=document.body;
-const btnTema=document.getElementById('toggleTheme');
-if(localStorage.getItem('tema')==='light') body.classList.add('light');
-atualizarTextoBotao();
-btnTema.addEventListener('click',()=>{
-  body.classList.toggle('light');
-  localStorage.setItem('tema',body.classList.contains('light')?'light':'dark');
-  atualizarTextoBotao();
-  document.querySelector('meta[name="theme-color"]').setAttribute('content', body.classList.contains('light')?'#c20010':'#e50914');
-});
-function atualizarTextoBotao(){ btnTema.textContent = body.classList.contains('light')?'🌙':'☀️'; }
-function obterExercicios(){ return JSON.parse(localStorage.getItem('exercicios')||'[]'); }
-function salvarExercicios(ex){ localStorage.setItem('exercicios',JSON.stringify(ex)); }
-function mostrarFeedback(texto){ const msg=document.createElement('div'); msg.className='feedback'; msg.textContent=texto; document.body.appendChild(msg); setTimeout(()=>msg.remove(),2000);}
-function adicionarExercicio(){
-  const nome=document.getElementById('nomeExercicio').value.trim();
-  const tipo=document.getElementById('tipoExercicio').value;
-  if(!nome) return mostrarFeedback("⚠️ Digite o nome do exercício!");
-  const exercicios=obterExercicios();
-  exercicios.push({id:Date.now(),nome,tipo,historico:[],observacoes:""});
-  exercicios.sort((a,b)=>a.nome.localeCompare(b.nome));
-  salvarExercicios(exercicios);
-  renderizarListas();
-  document.getElementById('nomeExercicio').value='';
-  mostrarFeedback("🏋️‍♀️ Exercício adicionado!");
+function showFeedback(text, ms = 1500) {
+  const el = document.getElementById('feedback');
+  el.textContent = text;
+  el.style.opacity = '1';
+  clearTimeout(el._t);
+  el._t = setTimeout(() => el.style.opacity = '0', ms);
 }
-function adicionarCarga(id){
-  const carga=prompt("Digite a carga (kg):");
-  if(!carga) return;
-  const exercicios=obterExercicios();
-  const ex=exercicios.find(e=>e.id===id);
-  ex.historico.push({id:Date.now(),data:new Date().toLocaleDateString('pt-BR'),carga:parseFloat(carga)});
-  if(ex.historico.length>30) ex.historico=ex.historico.slice(-30);
-  salvarExercicios(exercicios);
-  renderizarListas();
-  mostrarFeedback("💪 Carga registrada!");
-}
-function editarCarga(idEx,idCarga){
-  const exercicios=obterExercicios();
-  const ex=exercicios.find(e=>e.id===idEx);
-  const cargaItem=ex.historico.find(h=>h.id===idCarga);
-  const nova=prompt("Nova carga (kg):",cargaItem.carga);
-  if(!nova) return;
-  cargaItem.carga=parseFloat(nova);
-  salvarExercicios(exercicios);
-  renderizarListas();
-  mostrarFeedback("✏️ Carga atualizada!");
-}
-function removerCarga(idEx,idCarga){
-  const exercicios=obterExercicios();
-  const ex=exercicios.find(e=>e.id===idEx);
-  ex.historico=ex.historico.filter(h=>h.id!==idCarga);
-  salvarExercicios(exercicios);
-  renderizarListas();
-  mostrarFeedback("🗑️ Carga removida!");
-}
-function atualizarObservacao(id, valor){
-  const exercicios=obterExercicios();
-  const ex=exercicios.find(e=>e.id===id);
-  ex.observacoes = valor;
-  salvarExercicios(exercicios);
-}
-function excluirExercicio(id){
-  if(!confirm("Tem certeza que deseja excluir este exercício?")) return;
-  let exercicios=obterExercicios().filter(e=>e.id!==id);
-  salvarExercicios(exercicios);
-  renderizarListas();
-  mostrarFeedback("🗑️ Exercício excluído!");
-}
-function renderizarListas(){
-  const superiores=document.getElementById('listaSuperiores');
-  const inferiores=document.getElementById('listaInferiores');
-  superiores.innerHTML=''; inferiores.innerHTML='';
-  const exercicios=obterExercicios();
-  exercicios.forEach(ex=>{
-    const li=document.createElement('li');
-    let ultimo=ex.historico[ex.historico.length-1];
-    li.innerHTML=`
-      <strong>${ex.nome}</strong><br>
-      ${ultimo?`<small>Última carga: ${ultimo.carga} kg (${ultimo.data})</small>`:'<small>Sem carga registrada</small>'}<br>
-      <button onclick="adicionarCarga(${ex.id})">Adicionar Carga</button>
-      <button class="btnExcluir" onclick="excluirExercicio(${ex.id})">Excluir Exercício</button>
-      <div id="historico-${ex.id}">
-      ${ex.historico.map(h=>`
+
+function getJSON(key, fallback){ try { return JSON.parse(localStorage.getItem(key) || 'null') || fallback } catch(e){ return fallback } }
+function setJSON(key, val){ localStorage.setItem(key, JSON.stringify(val)) }
+
+let treinoAtual = "A";
+let historicoGlobal = getJSON('historico_cargas', {});
+
+function renderizarLista(){
+  const lista = document.getElementById('listaExercicios');
+  lista.innerHTML = '';
+  const exs = getJSON(`treino_${treinoAtual}`, []);
+  exs.forEach(ex => {
+    const li = document.createElement('li');
+    if (ex.concluido) li.classList.add('concluido');
+
+    const ultimasCargas = ex.historico.slice(-5); // só mostrar últimas 5 cargas
+
+    li.innerHTML = `
+      <strong>${ex.nome}</strong>
+      <div><small>Séries:</small> ${ex.series || '-'} | <small>Repetições:</small> ${ex.repeticoes || '-'} | <small>Descanso:</small> ${ex.descanso ? ex.descanso + ' segundos' : '-'}</div>
+      <div>${ultimasCargas.length ? ultimasCargas.map(h => `
         <div class="carga-item">
           <span>${h.data}: ${h.carga} kg</span>
-          <div class="carga-btns">
-            <button onclick="editarCarga(${ex.id},${h.id})">Editar</button>
-            <button onclick="removerCarga(${ex.id},${h.id})">Remover</button>
+          <div style="display:flex;gap:6px">
+            <button class="btn ghost" data-action="editarCarga" data-ex="${ex.id}" data-carga="${h.id}">Editar</button>
+            <button class="btn ghost" data-action="removerCarga" data-ex="${ex.id}" data-carga="${h.id}">Remover</button>
           </div>
-        </div>`).join('')}
+        </div>`).join('') : '<small>Sem carga registrada</small>'}</div>
+      <div class="btn-row">
+        <button class="btn primary" data-action="adicionarCarga" data-ex="${ex.id}">Adicionar Carga</button>
+        <button class="btn warn" data-action="excluirEx" data-ex="${ex.id}">Excluir</button>
+        <button class="btn check" data-action="concluirEx" data-ex="${ex.id}">✅</button>
       </div>
-      <label for="obs-${ex.id}" style="font-size:0.9rem;margin-top:0.5rem;display:block;">Observações:</label>
-      <textarea id="obs-${ex.id}" class="obs-area" placeholder="Adicione observações aqui...">${ex.observacoes||''}</textarea>
+      <div class="obs-container">
+        <label>Observações:</label>
+        <textarea class="obs-area" data-ex="${ex.id}" placeholder="Anote aqui...">${ex.observacoes||''}</textarea>
+      </div>
     `;
-    li.querySelector(`#obs-${ex.id}`).addEventListener('input', e => {
-      atualizarObservacao(ex.id, e.target.value);
-    });
-    if(ex.tipo==='superior') superiores.appendChild(li);
-    else inferiores.appendChild(li);
+    lista.appendChild(li);
   });
 }
-renderizarListas();
+
+function adicionarExercicio(){
+  const nome = document.getElementById('nomeExercicio').value.trim();
+  const series = document.getElementById('series').value.trim();
+  const repeticoes = document.getElementById('repeticoes').value.trim();
+  const descanso = document.getElementById('descanso').value.trim();
+  if(!nome) return showFeedback('⚠️ Digite o nome do exercício!');
+
+  let historicoExistente = historicoGlobal[nome] || [];
+  if(historicoExistente.length > 20) historicoExistente = historicoExistente.slice(-20);
+
+  const exs = getJSON(`treino_${treinoAtual}`, []);
+  exs.push({ id: Date.now(), nome, series, repeticoes, descanso, historico: [...historicoExistente], observacoes: '', concluido: false });
+  setJSON(`treino_${treinoAtual}`, exs);
+
+  document.getElementById('nomeExercicio').value = '';
+  document.getElementById('series').value = '';
+  document.getElementById('repeticoes').value = '';
+  document.getElementById('descanso').value = '';
+  renderizarLista();
+  showFeedback('✅ Exercício adicionado!');
+}
+
+function adicionarCarga(id){
+  const entrada = prompt('Digite a carga (kg):');
+  if(!entrada) return;
+  const carga = parseFloat(entrada.replace(',', '.'));
+  if(Number.isNaN(carga)) return showFeedback('⚠️ Carga inválida');
+
+  const exs = getJSON(`treino_${treinoAtual}`, []);
+  const ex = exs.find(x => x.id === id);
+
+  const novoRegistro = { id: Date.now(), data: new Date().toLocaleDateString('pt-BR'), carga };
+  ex.historico.push(novoRegistro);
+
+  let historicoAtual = [...ex.historico];
+  if(historicoAtual.length > 20) historicoAtual = historicoAtual.slice(-20);
+  historicoGlobal[ex.nome] = historicoAtual;
+  setJSON('historico_cargas', historicoGlobal);
+
+  setJSON(`treino_${treinoAtual}`, exs);
+  renderizarLista();
+  showFeedback('💪 Carga registrada!');
+}
+
+function editarCarga(idEx, idCarga){
+  const exs = getJSON(`treino_${treinoAtual}`, []);
+  const ex = exs.find(x => x.id === idEx);
+  const item = ex?.historico.find(h => h.id === idCarga);
+  const nova = prompt('Nova carga (kg):', item?.carga);
+  if(!nova) return;
+  const c = parseFloat(nova.replace(',', '.'));
+  if(Number.isNaN(c)) return showFeedback('⚠️ Carga inválida');
+  item.carga = c;
+
+  let historicoAtual = [...ex.historico];
+  if(historicoAtual.length > 20) historicoAtual = historicoAtual.slice(-20);
+  historicoGlobal[ex.nome] = historicoAtual;
+  setJSON('historico_cargas', historicoGlobal);
+
+  setJSON(`treino_${treinoAtual}`, exs);
+  renderizarLista();
+  showFeedback('✏️ Carga atualizada!');
+}
+
+function removerCarga(idEx, idCarga){
+  const exs = getJSON(`treino_${treinoAtual}`, []);
+  const ex = exs.find(x => x.id === idEx);
+  ex.historico = ex.historico.filter(h => h.id !== idCarga);
+
+  let historicoAtual = [...ex.historico];
+  if(historicoAtual.length > 20) historicoAtual = historicoAtual.slice(-20);
+  historicoGlobal[ex.nome] = historicoAtual;
+  setJSON('historico_cargas', historicoGlobal);
+
+  setJSON(`treino_${treinoAtual}`, exs);
+  renderizarLista();
+  showFeedback('🗑️ Carga removida!');
+}
+
+function excluirEx(id){
+  if(!confirm('Excluir este exercício?')) return;
+  const exs = getJSON(`treino_${treinoAtual}`, []).filter(x => x.id !== id);
+  setJSON(`treino_${treinoAtual}`, exs);
+  renderizarLista();
+  showFeedback('🗑️ Exercício excluído!');
+}
+
+function concluirEx(id){
+  const exs = getJSON(`treino_${treinoAtual}`, []);
+  const ex = exs.find(x => x.id === id);
+  ex.concluido = !ex.concluido;
+  setJSON(`treino_${treinoAtual}`, exs);
+  renderizarLista();
+  alert("✅ Exercício concluído! Não esqueça de anotar suas cargas!");
+}
+
+function atualizarObs(id, valor){
+  const exs = getJSON(`treino_${treinoAtual}`, []);
+  const ex = exs.find(x => x.id === id);
+  ex.observacoes = valor;
+  setJSON(`treino_${treinoAtual}`, exs);
+}
+
+function resetarTreino(){
+  if(!confirm("Deseja resetar este treino?")) return;
+  const exs = getJSON(`treino_${treinoAtual}`, []);
+  exs.forEach(ex => {
+    historicoGlobal[ex.nome] = ex.historico;
+  });
+  setJSON('historico_cargas', historicoGlobal);
+
+  setJSON(`treino_${treinoAtual}`, []);
+  renderizarLista();
+  showFeedback('🗑️ Treino resetado! Histórico de cargas mantido.');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btnAddEx').addEventListener('click', adicionarExercicio);
+  document.getElementById('listaExercicios').addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    const action = btn.dataset.action;
+    const exId = Number(btn.dataset.ex);
+    if(action === 'adicionarCarga') adicionarCarga(exId);
+    else if(action === 'editarCarga') editarCarga(exId, Number(btn.dataset.carga));
+    else if(action === 'removerCarga') removerCarga(exId, Number(btn.dataset.carga));
+    else if(action === 'excluirEx') excluirEx(exId);
+    else if(action === 'concluirEx') concluirEx(exId);
+  });
+  document.getElementById('listaExercicios').addEventListener('input', e => {
+    if(e.target.classList.contains('obs-area')){
+      const id = Number(e.target.dataset.ex);
+      atualizarObs(id, e.target.value);
+    }
+  });
+  document.getElementById('selectTreino').addEventListener('change', e=>{
+    treinoAtual = e.target.value;
+    renderizarLista();
+  });
+  document.getElementById('btnResetTreino').addEventListener('click', resetarTreino);
+  renderizarLista();
+});
 </script>
 </body>
 </html>
